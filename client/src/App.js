@@ -1,10 +1,42 @@
-import Landing from './pages/Landing';
+import { Landing, Error, Dashboard, Register } from './pages/index';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+{
+  // these woudl be used with BrowserRouter
+  /* <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<div>Dashboard</div>} />
+      <Route path="/register" element={<div>Register</div>} />
+      <Route path="/landing" element={<Landing />} />
+      <Route path="*" element={<div>Error</div>}>
+    </Routes>
+</BrowserRouter> */
+}
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Dashboard />,
+  },
+  {
+    path: '/register',
+    element: <Register />,
+  },
+  {
+    path: '/landing',
+    element: <Landing />,
+  },
+  {
+    path: '*',
+    element: <Error />,
+  },
+]);
 
 function App() {
   return (
-    <div>
-      <Landing />
-    </div>
+    <>
+      <RouterProvider router={router}></RouterProvider>;
+    </>
   );
 }
 
