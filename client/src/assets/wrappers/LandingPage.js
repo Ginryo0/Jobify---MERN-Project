@@ -22,7 +22,7 @@ const Wrapper = styled.main`
     }
   }
   p {
-    color: valr(--grey-600);
+    color: var(--grey-600);
     padding-right: 25px;
   }
   .main-img {
