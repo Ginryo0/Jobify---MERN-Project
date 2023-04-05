@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Wrapper = styled.main`
   nav {
@@ -22,7 +22,8 @@ const Wrapper = styled.main`
     }
   }
   p {
-    color: var(--grey-600);
+    color: valr(--grey-600);
+    padding-right: 25px;
   }
   .main-img {
     display: none;
@@ -32,9 +33,13 @@ const Wrapper = styled.main`
       grid-template-columns: 1fr 1fr;
       column-gap: 3rem;
     }
+    p {
+      padding-right: 0;
+    }
+
     .main-img {
       display: block;
     }
   }
-`
-export default Wrapper
+`;
+export default Wrapper;
