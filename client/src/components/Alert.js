@@ -1,4 +1,7 @@
+import { useAppCtx } from '../context/appContext';
+
 const Alert = () => {
-  return <div className="alert alert-danger">Alert</div>;
+  const { alertType, alertText } = useAppCtx();
+  return <div className={`alert alert-${alertType}`}>{alertText}</div>;
 };
 export default Alert;
