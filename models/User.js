@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 
-const schema = mongoose.Schema();
+const schema = mongoose.Schema;
 
 const UserSchema = new schema({
   name: {
