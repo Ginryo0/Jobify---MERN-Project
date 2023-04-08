@@ -8,12 +8,15 @@ const initialState = {
   email: '',
   password: '',
   isMember: true,
+  user: null,
+  token: null,
+  useLocation: '',
 };
 
 const Register = () => {
   const [user, setUser] = useState(initialState);
   // global state and useNavigate
-  const { isLoading, showAlert, displayAlert } = useAppCtx();
+  const { isLoading, showAlert, displayAlert, registerUser } = useAppCtx();
 
   const toggleMember = () => {
     setUser((prevState) => ({ ...prevState, isMember: !prevState.isMember }));
@@ -30,7 +33,12 @@ const Register = () => {
       displayAlert();
       return;
     }
-    console.log(user);
+    const currentUser = { name, email, password };
+    if (isMember) {
+      console.log('Already a member');
+    } else {
+      registerUser(currentUser);
+    }
   };
 
   return (
@@ -60,7 +68,7 @@ const Register = () => {
           value={user.password}
           changeHandler={inputChangeHandler}
         />
-        <button type="submit" className="btn btn-block">
+        <button type="submit" className="btn btn-block" disabled={isLoading}>
           Submit
         </button>
         <p>
