@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const schema = mongoose.Schema;
 
@@ -45,5 +46,14 @@ UserSchema.pre('save', async function () {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
+
+UserSchema.methods.createJWT = function () {
+  return jwt.sign({ userId: this._id }, 'jwtpotatas', {
+    expiresIn: '1d',
+  });
+  // return jwt.sign({ userId: this._id.toString() }, 'jwtpotatas', {
+  //   expiresIn: '1d',
+  // });
+};
 
 export default mongoose.model('User', UserSchema);
