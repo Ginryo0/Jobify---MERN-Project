@@ -1,4 +1,4 @@
-import { Landing, Error, Dashboard, Register } from './pages/index';
+import { Landing, Error, Register } from './pages/index';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 {
@@ -16,7 +16,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Dashboard />,
+    element: <div>db</div>,
   },
   {
     path: '/register',
