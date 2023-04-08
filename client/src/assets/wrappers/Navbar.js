@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Wrapper = styled.nav`
   height: var(--nav-height);
@@ -41,7 +41,7 @@ const Wrapper = styled.nav`
 
   .dropdown {
     position: absolute;
-    top: 40px;
+    transform: translateY(0);
     left: 0;
     width: 100%;
     background: var(--primary-100);
@@ -49,9 +49,11 @@ const Wrapper = styled.nav`
     padding: 0.5rem;
     text-align: center;
     visibility: hidden;
+    transition: all 0.15s ease;
     border-radius: var(--borderRadius);
   }
   .show-dropdown {
+    transform: translateY(15px);
     visibility: visible;
   }
   .dropdown-btn {
@@ -80,5 +82,5 @@ const Wrapper = styled.nav`
       display: block;
     }
   }
-`
-export default Wrapper
+`;
+export default Wrapper;
