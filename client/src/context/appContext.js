@@ -9,15 +9,19 @@ import {
   REGISTER_USER_ERROR,
 } from './actions';
 
+const user = localStorage.getItem('user');
+const token = localStorage.getItem('token');
+const userLocation = localStorage.getItem('location');
+
 const initialState = {
   isLoading: false,
   showAlert: false,
   alertType: '',
   alertText: '',
-  user: null,
-  token: null,
-  userLocation: '',
-  jobLocation: '',
+  user: user ? JSON.parse(user) : null,
+  token: token,
+  userLocation: userLocation || '',
+  jobLocation: userLocation || '',
 };
 
 const AppContext = React.createContext();
@@ -39,6 +43,19 @@ const AppCtxProvider = ({ children }) => {
     };
   }, [state]);
 
+  // LocalStorage Funcs
+  const addUserToLocalStorage = ({ user, token, location }) => {
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('token', token);
+    localStorage.setItem('location', location);
+  };
+
+  const removeUserFromLocalStorage = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('location');
+  };
+
   // actions fn
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
@@ -56,6 +73,7 @@ const AppCtxProvider = ({ children }) => {
         payload: { user, token, location },
       });
       // local storage store token
+      addUserToLocalStorage(response.data);
     } catch (error) {
       // console.log(error.response);
       dispatch({
