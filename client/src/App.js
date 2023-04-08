@@ -1,4 +1,4 @@
-import { Landing, Error, Register } from './pages/index';
+import { Landing, Error, Register, ProtectedRoute } from './pages/index';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {
   AllJobs,
@@ -22,7 +22,11 @@ import {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <SharedLayout />,
+    element: (
+      <ProtectedRoute>
+        <SharedLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <Stats /> },
       { path: 'all-jobs', element: <AllJobs /> },
