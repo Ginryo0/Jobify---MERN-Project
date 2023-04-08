@@ -15,7 +15,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [regState, setRegState] = useState(initialState);
   // global state and useNavigate
-  const { user, isLoading, showAlert, displayAlert, registerUser } =
+  const { user, isLoading, showAlert, displayAlert, registerUser, loginUser } =
     useAppCtx();
 
   const toggleMember = () => {
@@ -38,7 +38,7 @@ const Register = () => {
     }
     const currentUser = { name, email, password };
     if (isMember) {
-      console.log('Already a member');
+      loginUser(currentUser);
     } else {
       registerUser(currentUser);
     }
