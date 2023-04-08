@@ -1,6 +1,12 @@
 import { Landing, Error, Register } from './pages/index';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
+import {
+  AllJobs,
+  Profile,
+  SharedLayout,
+  AddJob,
+  Stats,
+} from './pages/dashboard';
 {
   // these woudl be used with BrowserRouter
   /* <BrowserRouter>
@@ -16,7 +22,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>db</div>,
+    element: <SharedLayout />,
+    children: [
+      { index: true, element: <Stats /> },
+      { path: 'all-jobs', element: <AllJobs /> },
+      { path: 'add-job', element: <AddJob /> },
+      { path: 'profile', element: <Profile /> },
+    ],
   },
   {
     path: '/register',
@@ -35,7 +47,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>;
+      <RouterProvider router={router}></RouterProvider>
     </>
   );
 }
