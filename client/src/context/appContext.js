@@ -7,6 +7,7 @@ import {
   SIGN_USER_BEGIN,
   SIGN_USER_SUCCESS,
   SIGN_USER_ERROR,
+  TOGGLE_SIDEBAR,
 } from './actions';
 
 const user = localStorage.getItem('user');
@@ -22,6 +23,7 @@ const initialState = {
   token: token,
   userLocation: userLocation || '',
   jobLocation: userLocation || '',
+  showSidebar: false,
 };
 
 const AppContext = React.createContext();
@@ -85,6 +87,11 @@ const AppCtxProvider = ({ children }) => {
       });
     }
   };
+
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
+
   // const clearAlert = () => {
   //   const timer = setTimeout(() => {
   //     dispatch({ type: CLEAR_ALERT });
@@ -92,7 +99,9 @@ const AppCtxProvider = ({ children }) => {
   // };
 
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, signUser }}>
+    <AppContext.Provider
+      value={{ ...state, displayAlert, signUser, toggleSidebar }}
+    >
       {children}
     </AppContext.Provider>
   );
