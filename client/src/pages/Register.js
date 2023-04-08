@@ -15,8 +15,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [regState, setRegState] = useState(initialState);
   // global state and useNavigate
-  const { user, isLoading, showAlert, displayAlert, registerUser, loginUser } =
-    useAppCtx();
+  const { user, isLoading, showAlert, displayAlert, signUser } = useAppCtx();
 
   const toggleMember = () => {
     setRegState((prevState) => ({
@@ -38,9 +37,9 @@ const Register = () => {
     }
     const currentUser = { name, email, password };
     if (isMember) {
-      loginUser(currentUser);
+      signUser(currentUser, 'login', 'Login Successful! Redirecting...');
     } else {
-      registerUser(currentUser);
+      signUser(currentUser, 'register', 'User Created! Redirecting...');
     }
   };
 

@@ -1,12 +1,9 @@
 import {
   CLEAR_ALERT,
   DISPLAY_ALERT,
-  REGISTER_USER_BEGIN,
-  REGISTER_USER_SUCCESS,
-  REGISTER_USER_ERROR,
-  LOGIN_USER_BEGIN,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_ERROR,
+  SIGN_USER_BEGIN,
+  SIGN_USER_SUCCESS,
+  SIGN_USER_ERROR,
 } from './actions';
 
 const reducer = (state, action) => {
@@ -25,9 +22,9 @@ const reducer = (state, action) => {
       alertText: '',
     };
   }
-  if (action.type === REGISTER_USER_BEGIN) {
+  if (action.type === SIGN_USER_BEGIN) {
     return { ...state, isLoading: true };
-  } else if (action.type === REGISTER_USER_SUCCESS) {
+  } else if (action.type === SIGN_USER_SUCCESS) {
     return {
       ...state,
       isLoading: false,
@@ -37,9 +34,9 @@ const reducer = (state, action) => {
       jobLocation: action.payload.location,
       showAlert: true,
       alertType: 'success',
-      alertText: 'User Created! Redirecting ...',
+      alertText: action.payload.alertText,
     };
-  } else if (action.type === REGISTER_USER_ERROR) {
+  } else if (action.type === SIGN_USER_ERROR) {
     return {
       ...state,
       isLoading: false,
