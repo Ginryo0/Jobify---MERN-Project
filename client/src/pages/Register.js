@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Logo, FormRow, Alert } from '../components';
 import Wrapper from '../assets/wrappers/RegisterPage';
 import { useAppCtx } from '../context/appContext';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   name: '',
@@ -11,21 +12,26 @@ const initialState = {
 };
 
 const Register = () => {
-  const [user, setUser] = useState(initialState);
+  const navigate = useNavigate();
+  const [regState, setRegState] = useState(initialState);
   // global state and useNavigate
-  const { isLoading, showAlert, displayAlert, registerUser } = useAppCtx();
+  const { user, isLoading, showAlert, displayAlert, registerUser } =
+    useAppCtx();
 
   const toggleMember = () => {
-    setUser((prevState) => ({ ...prevState, isMember: !prevState.isMember }));
+    setRegState((prevState) => ({
+      ...prevState,
+      isMember: !prevState.isMember,
+    }));
   };
 
   const inputChangeHandler = (e) => {
-    setUser(() => ({ ...user, [e.target.name]: e.target.value }));
+    setRegState(() => ({ ...regState, [e.target.name]: e.target.value }));
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const { name, email, password, isMember } = user;
+    const { name, email, password, isMember } = regState;
     if (!email || !password || (!isMember && !name)) {
       displayAlert();
       return;
@@ -38,17 +44,26 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
+    }
+  }, [user, navigate]);
+
   return (
     <Wrapper className="full-page">
       <form className="form" onSubmit={onSubmit}>
         <Logo />
-        <h3>{user.isMember ? 'Login' : 'Register'}</h3>
+        <h3>{regState.isMember ? 'Login' : 'Register'}</h3>
         {showAlert && <Alert />}
-        {!user.isMember && (
+        {!regState.isMember && (
           <FormRow
             type="text"
             name="name"
-            value={user.name}
+            value={regState.name}
             changeHandler={inputChangeHandler}
           />
         )}
@@ -56,22 +71,22 @@ const Register = () => {
         <FormRow
           type="email"
           name="email"
-          value={user.email}
+          value={regState.email}
           changeHandler={inputChangeHandler}
         />
         <FormRow
           type="password"
           name="password"
-          value={user.password}
+          value={regState.password}
           changeHandler={inputChangeHandler}
         />
         <button type="submit" className="btn btn-block" disabled={isLoading}>
           Submit
         </button>
         <p>
-          {user.isMember ? 'Not a member yet' : 'Already a member?'}
+          {regState.isMember ? 'Not a member yet' : 'Already a member?'}
           <button type="button" onClick={toggleMember} className="member-btn">
-            {user.isMember ? 'Register' : 'Login'}
+            {regState.isMember ? 'Register' : 'Login'}
           </button>
         </p>
       </form>
