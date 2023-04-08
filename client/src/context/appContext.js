@@ -8,6 +8,7 @@ import {
   SIGN_USER_SUCCESS,
   SIGN_USER_ERROR,
   TOGGLE_SIDEBAR,
+  LOGOUT_USER,
 } from './actions';
 
 const user = localStorage.getItem('user');
@@ -33,6 +34,7 @@ const AppCtxProvider = ({ children }) => {
 
   // ClearAlert - useEffect to clear previous timer
   useEffect(() => {
+    console.log(state);
     const timer = state.showAlert
       ? setTimeout(() => {
           state.showAlert && dispatch({ type: CLEAR_ALERT });
@@ -92,6 +94,11 @@ const AppCtxProvider = ({ children }) => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
 
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER });
+    removeUserFromLocalStorage();
+  };
+
   // const clearAlert = () => {
   //   const timer = setTimeout(() => {
   //     dispatch({ type: CLEAR_ALERT });
@@ -100,7 +107,7 @@ const AppCtxProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ ...state, displayAlert, signUser, toggleSidebar }}
+      value={{ ...state, displayAlert, signUser, toggleSidebar, logoutUser }}
     >
       {children}
     </AppContext.Provider>

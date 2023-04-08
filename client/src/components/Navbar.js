@@ -6,7 +6,7 @@ import Logo from './Logo';
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
-  const { toggleSidebar } = useAppCtx();
+  const { toggleSidebar, logoutUser, user } = useAppCtx();
   return (
     <Wrapper>
       <div className="nav-center">
@@ -24,11 +24,11 @@ const Navbar = () => {
             onClick={() => setShowLogout((prev) => !prev)}
           >
             <FaUserCircle />
-            Meshmesh
+            {user?.name}
             <FaCaretDown />
           </button>
           <div className={`dropdown ${showLogout ? 'show-dropdown' : ''}`}>
-            <button type="button" className="dropdown-btn">
+            <button type="button" className="dropdown-btn" onClick={logoutUser}>
               logout
             </button>
           </div>

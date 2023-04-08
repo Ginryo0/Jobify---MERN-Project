@@ -9,3 +9,4 @@ export const SIGN_USER_SUCCESS = 'SIGN_USER_SUCCESS';
 export const SIGN_USER_ERROR = 'SIGN_USER_ERROR';
 
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
+export const LOGOUT_USER = 'LOGOUT_USER';
