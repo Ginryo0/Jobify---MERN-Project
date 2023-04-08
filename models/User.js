@@ -26,6 +26,7 @@ const UserSchema = new schema({
     type: String,
     required: [true, 'Please provide a valid password (6 or more characters)'],
     minlength: [6, 'Password is too short (6 characters at least)'],
+    select: false,
   },
   lastName: {
     type: String,
@@ -48,8 +49,8 @@ UserSchema.pre('save', async function () {
 });
 
 UserSchema.methods.createJWT = function () {
-  return jwt.sign({ userId: this._id }, 'jwtpotatas', {
-    expiresIn: '1d',
+  return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_LIFETIME,
   });
   // return jwt.sign({ userId: this._id.toString() }, 'jwtpotatas', {
   //   expiresIn: '1d',
