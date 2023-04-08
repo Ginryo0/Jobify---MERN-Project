@@ -3,6 +3,7 @@ import express from 'express';
 const app = express();
 import * as dotenv from 'dotenv';
 dotenv.config();
+import morgan from 'morgan';
 
 // db and authenticateUser
 import connectDB from './db/connect.js';
@@ -14,6 +15,11 @@ import jobRouter from './routes/jobRoutes.js';
 // middleware
 import notFoundMiddleware from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
+
+// requests log - dev only
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev'));
+}
 
 // json body parser
 // app.use(cors());

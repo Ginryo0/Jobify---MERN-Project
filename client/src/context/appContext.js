@@ -29,7 +29,7 @@ const AppContext = React.createContext();
 const AppCtxProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // use effect to clear timer
+  // ClearAlert - useEffect to clear previous timer
   useEffect(() => {
     const timer = state.showAlert
       ? setTimeout(() => {
