@@ -10,7 +10,7 @@ const register = async (req, res) => {
     throw new UnprocessableEntityError('Please provide all values');
   }
 
-  const userAlreadyExists = User.findOne({ email });
+  const userAlreadyExists = await User.findOne({ email });
   if (userAlreadyExists) {
     throw new UnprocessableEntityError('Email already in use.');
   }

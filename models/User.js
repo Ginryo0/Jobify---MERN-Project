@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import bcrypt from 'bcryptjs';
 
 const schema = mongoose.Schema;
 
@@ -37,6 +38,12 @@ const UserSchema = new schema({
     trim: true,
     default: 'kafr potata city',
   },
+});
+
+// not triggered by findandupdate
+UserSchema.pre('save', async function () {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 export default mongoose.model('User', UserSchema);
