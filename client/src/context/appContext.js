@@ -32,6 +32,9 @@ const AppContext = React.createContext();
 const AppCtxProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // global auth header
+  axios.defaults.headers['Authorization'] = `Bearer ${state.token}`;
+
   // ClearAlert - useEffect to clear previous timer
   useEffect(() => {
     console.log(state);
@@ -100,7 +103,15 @@ const AppCtxProvider = ({ children }) => {
   };
 
   const updateUser = async (currentUser) => {
-    console.log(currentUser);
+    try {
+      const { data } = await axios.patch(
+        '/api/v1/auth/update-user',
+        currentUser
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // const clearAlert = () => {
