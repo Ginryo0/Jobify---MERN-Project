@@ -45,7 +45,7 @@ const UserSchema = new schema({
 // not triggered by findandupdate
 UserSchema.pre('save', async function () {
   // modifiedPaths -> modified fields in schema
-  console.log(this.modifiedPath());
+  console.log(this.modifiedPaths());
   // isModified -> T/F
   if (!this.isModified('password')) return;
   const salt = await bcrypt.genSalt(10);

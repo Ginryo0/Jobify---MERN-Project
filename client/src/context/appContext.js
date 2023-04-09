@@ -99,6 +99,10 @@ const AppCtxProvider = ({ children }) => {
     removeUserFromLocalStorage();
   };
 
+  const updateUser = async (currentUser) => {
+    console.log(currentUser);
+  };
+
   // const clearAlert = () => {
   //   const timer = setTimeout(() => {
   //     dispatch({ type: CLEAR_ALERT });
@@ -107,7 +111,14 @@ const AppCtxProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ ...state, displayAlert, signUser, toggleSidebar, logoutUser }}
+      value={{
+        ...state,
+        displayAlert,
+        signUser,
+        toggleSidebar,
+        logoutUser,
+        updateUser,
+      }}
     >
       {children}
     </AppContext.Provider>
