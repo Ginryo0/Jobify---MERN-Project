@@ -204,7 +204,6 @@ const reducer = (state, action) => {
   if (action.type === SHOW_STATS_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
   } else if (action.type === SHOW_STATS_SUCCESS) {
-    // clear values too
     return {
       ...state,
       isLoading: false,
