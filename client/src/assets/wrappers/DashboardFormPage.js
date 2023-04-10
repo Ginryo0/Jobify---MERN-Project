@@ -16,6 +16,11 @@ const Wrapper = styled.section`
     padding: 0;
     max-width: 100%;
     width: 100%;
+    input:focus,
+    select:focus {
+      outline: transparent;
+      border: 2px solid var(--primary-500);
+    }
   }
   .form-row {
     margin-bottom: 0;
@@ -25,10 +30,6 @@ const Wrapper = styled.section`
     row-gap: 0.5rem;
   }
 
-  .form input:focus {
-    outline: transparent;
-    border: 2px solid var(--primary-500);
-  }
   .form-center button {
     align-self: end;
     height: 35px;

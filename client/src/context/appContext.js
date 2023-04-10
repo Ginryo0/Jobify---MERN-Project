@@ -24,17 +24,17 @@ const token = localStorage.getItem('token');
 const userLocation = localStorage.getItem('location');
 
 const initialState = {
-  // Ui state
+  // UI state
   isLoading: false,
   showAlert: false,
   alertType: '',
   alertText: '',
   showSidebar: false,
-  // user state
+  // User state
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: userLocation || '',
-  // job state
+  // Job state
   isEditing: false,
   editJobId: '',
   position: '',
@@ -44,6 +44,11 @@ const initialState = {
   jobType: 'full-time',
   statusOptions: ['pending', 'interview', 'declined'],
   status: 'pending',
+  // All Jobs state
+  jobs: [],
+  totalJobs: 0,
+  numOfPages: 1,
+  page: 1,
 };
 
 const AppContext = React.createContext();

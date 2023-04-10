@@ -19,6 +19,13 @@ import {
 import { initialState } from './appContext';
 
 const reducer = (state, action) => {
+  const errorState = {
+    isLoading: false,
+    showAlert: true,
+    alertType: 'danger',
+    alertText: action.payload.msg,
+  };
+
   const initialJobState = {
     isEditing: false,
     editJobId: '',
@@ -61,10 +68,7 @@ const reducer = (state, action) => {
   } else if (action.type === SIGN_USER_ERROR) {
     return {
       ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: 'danger',
-      alertText: action.payload.msg,
+      ...errorState,
     };
   }
 
@@ -99,10 +103,7 @@ const reducer = (state, action) => {
   } else if (action.type === UPDATE_USER_ERROR) {
     return {
       ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: 'danger',
-      alertText: action.payload.msg,
+      ...errorState,
     };
   }
 
@@ -132,10 +133,7 @@ const reducer = (state, action) => {
   } else if (action.type === CREATE_JOB_ERROR) {
     return {
       ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: 'danger',
-      alertText: action.payload.msg,
+      ...errorState,
     };
   }
 
