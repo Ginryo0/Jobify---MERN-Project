@@ -226,6 +226,15 @@ const AppCtxProvider = ({ children }) => {
       logoutUser();
     }
   };
+
+  const setEditJob = (id) => {
+    console.log(`set edit job : ${id}`);
+  };
+
+  const deleteJob = (id) => {
+    console.log(`delete job : ${id}`);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -239,6 +248,8 @@ const AppCtxProvider = ({ children }) => {
         clearValues,
         createJob,
         getJobs,
+        setEditJob,
+        deleteJob,
       }}
     >
       {children}
