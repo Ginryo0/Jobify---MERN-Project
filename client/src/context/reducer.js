@@ -18,6 +18,9 @@ import {
   GET_JOBS_SUCCESS,
   SET_EDIT_JOB,
   DELETE_JOB_BEGIN,
+  EDIT_JOB_BEGIN,
+  EDIT_JOB_SUCCESS,
+  EDIT_JOB_ERROR,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -176,6 +179,25 @@ const reducer = (state, action) => {
     return { ...state, isLoading: true };
   }
 
+  if (action.type === EDIT_JOB_BEGIN) {
+    return { ...state, isLoading: true };
+  } else if (action.type === EDIT_JOB_SUCCESS) {
+    // clear values too
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'Job updated!',
+      ...initialJobState,
+    };
+  } else if (action.type === EDIT_JOB_ERROR) {
+    return {
+      ...state,
+      ...errorState,
+      alertText: action.payload.msg,
+    };
+  }
   throw new Error(`no such action : ${action.type}`);
 };
 
