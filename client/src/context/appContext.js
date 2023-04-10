@@ -13,6 +13,7 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
+  CLEAR_VALUES,
 } from './actions';
 
 const user = localStorage.getItem('user');
@@ -171,12 +172,9 @@ const AppCtxProvider = ({ children }) => {
     });
   };
 
-  // const clearAlert = () => {
-  //   const timer = setTimeout(() => {
-  //     dispatch({ type: CLEAR_ALERT });
-  //   }, 3000);
-  // };
-
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES });
+  };
   return (
     <AppContext.Provider
       value={{
@@ -187,6 +185,7 @@ const AppCtxProvider = ({ children }) => {
         logoutUser,
         updateUser,
         handleChange,
+        clearValues,
       }}
     >
       {children}

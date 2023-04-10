@@ -15,6 +15,7 @@ const AddJob = () => {
     status,
     statusOptions,
     handleChange,
+    clearValues,
   } = useAppCtx();
 
   const submitHandler = (e) => {
@@ -80,6 +81,14 @@ const AddJob = () => {
               onClick={submitHandler}
             >
               submit
+            </button>
+
+            <button
+              className="btn btn-block clear-btn"
+              type="button"
+              onClick={clearValues}
+            >
+              clear
             </button>
           </div>
         </div>
