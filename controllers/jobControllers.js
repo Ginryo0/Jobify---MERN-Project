@@ -85,7 +85,7 @@ const showStats = async (req, res) => {
   };
 
   let monthlyApplications = [];
-  res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
+  res.status(StatusCodes.OK).json({ stats: defaultStats, monthlyApplications });
 };
 
 export { createJob, deleteJob, getAllJobs, updateJob, showStats };
