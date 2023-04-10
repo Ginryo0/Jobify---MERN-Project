@@ -9,8 +9,8 @@ const UserSchema = new schema({
   name: {
     type: String,
     required: [true, 'Please provide a valid name (3-20 characters)'],
-    minlength: [3, 'Name is too short (3 characters at least)'],
-    maxlength: [20, 'Name is too long (3 characters at most)'],
+    minlength: [3, 'Name too short (3 characters at least)'],
+    maxlength: [20, 'Name too long (20 characters at most)'],
     trim: true,
   },
   email: {

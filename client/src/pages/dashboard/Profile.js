@@ -13,7 +13,6 @@ const Profile = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // temp comment
     if (!name || !email || !lastName || !location) {
       displayAlert();
       return;
