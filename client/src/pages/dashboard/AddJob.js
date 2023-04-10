@@ -16,6 +16,7 @@ const AddJob = () => {
     statusOptions,
     handleChange,
     clearValues,
+    createJob,
   } = useAppCtx();
 
   const submitHandler = (e) => {
@@ -24,6 +25,12 @@ const AddJob = () => {
       displayAlert();
       return;
     }
+
+    if (isEditing) {
+      // later
+      return;
+    }
+    createJob();
   };
 
   const jobInputHandler = (e) => {

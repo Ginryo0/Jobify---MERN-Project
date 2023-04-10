@@ -11,11 +11,24 @@ import {
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CREATE_JOB_BEGIN,
+  CREATE_JOB_SUCCESS,
+  CREATE_JOB_ERROR,
 } from './actions';
 
 import { initialState } from './appContext';
 
 const reducer = (state, action) => {
+  const initialJobState = {
+    isEditing: false,
+    editJobId: '',
+    position: '',
+    company: '',
+    jobLocation: state.userLocation,
+    jobType: 'full-time',
+    status: 'pending',
+  };
+
   if (action.type === DISPLAY_ALERT) {
     return {
       ...state,
@@ -98,21 +111,34 @@ const reducer = (state, action) => {
   }
 
   if (action.type === CLEAR_VALUES) {
-    const initialJobState = {
-      isEditing: false,
-      editJobId: '',
-      position: '',
-      company: '',
-      jobLocation: state.userLocation,
-      jobType: 'full-time',
-      status: 'pending',
-    };
-
     return {
       ...state,
       ...initialJobState,
     };
   }
+
+  if (action.type === CREATE_JOB_BEGIN) {
+    return { ...state, isLoading: true };
+  } else if (action.type === CREATE_JOB_SUCCESS) {
+    // clear values too
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Job Created!',
+      ...initialJobState,
+    };
+  } else if (action.type === CREATE_JOB_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    };
+  }
+
   throw new Error(`no such action : ${action.type}`);
 };
 
