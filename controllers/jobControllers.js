@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import mongoose from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 import {
   UnprocessableEntityError,
   NotFoundError,
@@ -64,14 +64,15 @@ const deleteJob = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: 'Success! Job deleted' });
 };
 const showStats = async (req, res) => {
-  // match createdBy =  mongoose.Type.ObjectId -idk why has to be Types
-  // group them by staus and count hem
+  // match createdBy =  mongoose.Type.ObjectId - ObjectId withoutTypes creates a schema or smth like this
+  // group them by status and count them
   let stats = await Job.aggregate([
     { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
     { $group: { _id: '$status', count: { $sum: 1 } } },
   ]);
 
-  stats.reduce((acc, curr) => {
+  // reduce data in array into an object
+  stats = stats.reduce((acc, curr) => {
     const { _id: title, count } = curr;
     acc[title] = count;
     return acc;
@@ -82,6 +83,7 @@ const showStats = async (req, res) => {
     interview: stats.interview || 0,
     declined: stats.declined || 0,
   };
+
   let monthlyApplications = [];
   res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
 };

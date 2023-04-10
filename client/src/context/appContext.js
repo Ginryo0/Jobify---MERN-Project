@@ -24,6 +24,8 @@ import {
   EDIT_JOB_BEGIN,
   EDIT_JOB_SUCCESS,
   EDIT_JOB_ERROR,
+  SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
 } from './actions';
 
 const user = localStorage.getItem('user');
@@ -56,6 +58,9 @@ const initialState = {
   totalJobs: 0,
   numOfPages: 1,
   page: 1,
+  // Stats stats
+  stats: {},
+  monthlyApplications: [],
 };
 
 const AppContext = React.createContext();
@@ -265,6 +270,17 @@ const AppCtxProvider = ({ children }) => {
     } catch (error) {
       // console.log(error.response);
       logoutUser();
+    }
+  };
+
+  const showStats = async () => {
+    dispatch({ type: SHOW_STATS_BEGIN });
+    try {
+      const { data } = await authFetch('/jobs/stats');
+      dispatch({ type: SHOW_STATS_SUCCESS, payload: data });
+    } catch (error) {
+      console.log(error.response);
+      // logoutUser();
     }
   };
 
