@@ -17,6 +17,8 @@ import {
   CREATE_JOB_BEGIN,
   CREATE_JOB_SUCCESS,
   CREATE_JOB_ERROR,
+  GET_JOBS_BEGIN,
+  GET_JOBS_SUCCESS,
 } from './actions';
 
 const user = localStorage.getItem('user');
@@ -85,7 +87,7 @@ const AppCtxProvider = ({ children }) => {
 
   // ClearAlert - useEffect to clear previous timer
   useEffect(() => {
-    console.log(state);
+    // console.log(state);
     const timer = state.showAlert
       ? setTimeout(() => {
           state.showAlert && dispatch({ type: CLEAR_ALERT });
@@ -202,6 +204,24 @@ const AppCtxProvider = ({ children }) => {
         type: CREATE_JOB_ERROR,
         payload: { msg: error.response.data.msg },
       });
+    }
+  };
+
+  const getJobs = async () => {
+    let url = '/jobs';
+
+    dispatch({ type: GET_JOBS_BEGIN });
+
+    try {
+      // get is default - no need to write .get
+      const { data } = await authFetch(url);
+      const { jobs, totalJobs, numOfPages } = data;
+      dispatch({
+        type: GET_JOBS_SUCCESS,
+        payload: { jobs, totalJobs, numOfPages },
+      });
+    } catch (error) {
+      console.log(error.response);
     }
   };
   return (
