@@ -221,7 +221,9 @@ const AppCtxProvider = ({ children }) => {
         payload: { jobs, totalJobs, numOfPages },
       });
     } catch (error) {
+      // errors caught here are probably -> 500 = server is down -> log out then
       console.log(error.response);
+      logoutUser();
     }
   };
   return (
