@@ -12,6 +12,7 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  HANDLE_CHANGE,
 } from './actions';
 
 const user = localStorage.getItem('user');
@@ -163,6 +164,13 @@ const AppCtxProvider = ({ children }) => {
     }
   };
 
+  const handleChange = ({ name, value }) => {
+    dispatch({
+      type: HANDLE_CHANGE,
+      payload: { name, value },
+    });
+  };
+
   // const clearAlert = () => {
   //   const timer = setTimeout(() => {
   //     dispatch({ type: CLEAR_ALERT });
@@ -178,6 +186,7 @@ const AppCtxProvider = ({ children }) => {
         toggleSidebar,
         logoutUser,
         updateUser,
+        handleChange,
       }}
     >
       {children}
