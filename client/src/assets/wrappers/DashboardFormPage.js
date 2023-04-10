@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Wrapper = styled.section`
   border-radius: var(--borderRadius);
@@ -23,6 +23,11 @@ const Wrapper = styled.section`
   .form-center {
     display: grid;
     row-gap: 0.5rem;
+  }
+
+  .form input:focus {
+    outline: transparent;
+    border: 2px solid var(--primary-500);
   }
   .form-center button {
     align-self: end;
@@ -63,6 +68,6 @@ const Wrapper = styled.section`
       margin-top: 0;
     }
   }
-`
+`;
 
-export default Wrapper
+export default Wrapper;
