@@ -25,7 +25,28 @@ const getAllJobs = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ jobs, totalJobs: jobs.length, numOfPages: 1 });
 };
-const updateJob = async (req, res) => {};
+const updateJob = async (req, res) => {
+  const { id: jobId } = req.params;
+  const { position, company } = req.body;
+
+  if (!position || !company) {
+    throw new UnprocessableEntityError('Please provide all values');
+  }
+
+  const job = await Job.findOne({ _id: jobId });
+
+  if (!job) {
+    throw new NotFoundError(`No job was found with id :${jobId}`);
+  }
+
+  // we do findOneAndUpdate -> to run validators again I guess
+  const updatedJob = await Job.findOneAndUpdate({ _id: jobId }, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(StatusCodes.OK).json({ updateJob });
+};
 const deleteJob = async (req, res) => {
   res.send('delete job');
 };
