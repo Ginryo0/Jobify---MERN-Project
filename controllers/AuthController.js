@@ -1,9 +1,10 @@
 import { StatusCodes } from 'http-status-codes';
-import User from '../models/User.js';
 import {
   UnprocessableEntityError,
   UnAuthenticatedError,
 } from '../errors/index.js';
+
+import User from '../models/User.js';
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
