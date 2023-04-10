@@ -19,15 +19,26 @@ const token = localStorage.getItem('token');
 const userLocation = localStorage.getItem('location');
 
 const initialState = {
+  // Ui state
   isLoading: false,
   showAlert: false,
   alertType: '',
   alertText: '',
+  showSidebar: false,
+  // user state
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: userLocation || '',
+  // job state
+  isEditing: false,
+  editJobId: '',
+  position: '',
+  company: '',
   jobLocation: userLocation || '',
-  showSidebar: false,
+  jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
+  jobType: 'full-time',
+  statusOptions: ['pending', 'interview', 'declined'],
+  status: 'pending',
 };
 
 const AppContext = React.createContext();
@@ -35,15 +46,9 @@ const AppContext = React.createContext();
 const AppCtxProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // global auth header
-  // axios.defaults.headers['Authorization'] = `Bearer ${state.token}`;
-
   // Instance
   const authFetch = axios.create({
     baseURL: '/api/v1',
-    // headers: {
-    //   Authorization: `Bearer ${state.token}`,
-    // },
   });
 
   // Request Interceptor

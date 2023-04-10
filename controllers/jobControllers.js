@@ -16,6 +16,7 @@ const createJob = async (req, res) => {
   const job = await Job.create(req.body);
   res.status(StatusCodes.CREATED).json({ job });
 };
+
 const getAllJobs = async (req, res) => {
   res.send('getAllJobs');
 };
