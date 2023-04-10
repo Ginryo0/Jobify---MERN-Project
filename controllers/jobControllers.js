@@ -1,10 +1,11 @@
 import { StatusCodes } from 'http-status-codes';
-import mongoose, { ObjectId } from 'mongoose';
+import mongoose from 'mongoose';
 import {
   UnprocessableEntityError,
   NotFoundError,
   UnAuthenticatedError,
 } from '../errors/index.js';
+import moment from 'moment';
 
 import Job from '../models/Job.js';
 import checkPermissions from '../utils/checkPermissions.js';
@@ -96,6 +97,23 @@ const showStats = async (req, res) => {
     { $sort: { '_id.year': -1, '_id.month': -1 } },
     { $limit: 6 },
   ]);
+
+  monthlyApplications = monthlyApplications
+    .map((item) => {
+      const {
+        _id: { year, month },
+        count,
+      } = item;
+
+      // month - 1 cuz moment goes 0 - 11
+      const date = moment()
+        .month(month - 1)
+        .year(year)
+        .format('MMM Y');
+      return { date, count };
+    })
+    // reverse -> reverse array in place
+    .reverse();
   res.status(StatusCodes.OK).json({ stats: defaultStats, monthlyApplications });
 };
 
