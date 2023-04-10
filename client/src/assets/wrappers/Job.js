@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Wrapper = styled.article`
   background: var(--white);
@@ -60,14 +60,24 @@ const Wrapper = styled.article`
     display: grid;
     grid-template-columns: 1fr;
     row-gap: 0.5rem;
+    position: relative;
     @media (min-width: 576px) {
       grid-template-columns: 1fr 1fr;
+      .status {
+        position: absolute;
+      }
     }
     @media (min-width: 992px) {
       grid-template-columns: 1fr;
+      .status {
+        position: static;
+      }
     }
     @media (min-width: 1120px) {
       grid-template-columns: 1fr 1fr;
+      .status {
+        position: absolute;
+      }
     }
   }
 
@@ -78,6 +88,8 @@ const Wrapper = styled.article`
     text-align: center;
     width: 100px;
     height: 30px;
+    top: 65%;
+    left: 50%;
   }
   footer {
     margin-top: 1rem;
@@ -100,6 +112,6 @@ const Wrapper = styled.article`
   &:hover .actions {
     visibility: visible;
   }
-`
+`;
 
-export default Wrapper
+export default Wrapper;

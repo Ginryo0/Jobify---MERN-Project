@@ -17,6 +17,7 @@ const AddJob = () => {
     handleChange,
     clearValues,
     createJob,
+    editJob,
   } = useAppCtx();
 
   const submitHandler = (e) => {
@@ -27,7 +28,7 @@ const AddJob = () => {
     }
 
     if (isEditing) {
-      // later
+      editJob();
       return;
     }
     createJob();

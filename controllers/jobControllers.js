@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import {
   UnprocessableEntityError,
+  NotFoundError,
   UnAuthenticatedError,
 } from '../errors/index.js';
 
@@ -24,9 +25,7 @@ const getAllJobs = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ jobs, totalJobs: jobs.length, numOfPages: 1 });
 };
-const updateJob = async (req, res) => {
-  res.send('update job');
-};
+const updateJob = async (req, res) => {};
 const deleteJob = async (req, res) => {
   res.send('delete job');
 };
