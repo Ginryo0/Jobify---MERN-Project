@@ -42,7 +42,6 @@ const updateJob = async (req, res) => {
 
   checkPermissions(req.user, job.createdBy);
 
-  // we do findOneAndUpdate -> to save our time by updating fields manually & run validators again
   const updatedJob = await Job.findOneAndUpdate({ _id: jobId }, req.body, {
     new: true,
     runValidators: true,

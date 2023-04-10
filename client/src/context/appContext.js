@@ -254,7 +254,6 @@ const AppCtxProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
-    console.log('edit');
   };
 
   const deleteJob = async (jobId) => {
