@@ -238,6 +238,7 @@ const AppCtxProvider = ({ children }) => {
         handleChange,
         clearValues,
         createJob,
+        getJobs,
       }}
     >
       {children}

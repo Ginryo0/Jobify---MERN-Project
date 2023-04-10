@@ -1,6 +1,4 @@
-const Job = () => {
-  return (
-    <div>Job</div>
-  )
-}
-export default Job
+const Job = ({ company }) => {
+  return <div>{company}</div>;
+};
+export default Job;
