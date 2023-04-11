@@ -1,3 +1,5 @@
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import 'express-async-errors';
 import express from 'express';
 const app = express();
@@ -22,16 +24,21 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// serving front end
+app.use(express.static(path.resolve(__dirname, './client/build')));
 // json body parser
 // app.use(cors());
 app.use(express.json());
 
-app.get('/api/v1', (req, res) => {
-  res.json('Welcome');
-});
-
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', authenticateUser, jobRouter);
+
+// maybe not needed - but to make sure any request that doesn't go to api goes to index.html -> and from their react router will take the lead
+app.use('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

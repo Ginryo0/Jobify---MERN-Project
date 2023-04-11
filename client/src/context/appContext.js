@@ -243,8 +243,7 @@ const AppCtxProvider = ({ children }) => {
         payload: { jobs, totalJobs, numOfPages },
       });
     } catch (error) {
-      // errors caught here are probably -> 500 = server is down -> log out then
-      console.log(error.response);
+      // errors caught here are probably -> 500
       logoutUser();
     }
   };
@@ -280,7 +279,6 @@ const AppCtxProvider = ({ children }) => {
       await authFetch.delete(`/jobs/${jobId}`);
       getJobs();
     } catch (error) {
-      // console.log(error.response);
       logoutUser();
     }
   };
@@ -291,8 +289,7 @@ const AppCtxProvider = ({ children }) => {
       const { data } = await authFetch('/jobs/stats');
       dispatch({ type: SHOW_STATS_SUCCESS, payload: data });
     } catch (error) {
-      console.log(error.response);
-      // logoutUser();
+      logoutUser();
     }
   };
 

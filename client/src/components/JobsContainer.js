@@ -27,6 +27,7 @@ const JobsContainer = () => {
       // clear previous timeout
       clearTimeout(timer);
     };
+    // eslint-disable-next-line
   }, [page, search, searchStatus, searchType, sort]);
 
   if (isLoading) {
