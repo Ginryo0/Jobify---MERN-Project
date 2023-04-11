@@ -6,6 +6,7 @@ const app = express();
 import * as dotenv from 'dotenv';
 dotenv.config();
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 
 // sec pkgs
 import helmet from 'helmet';
@@ -39,6 +40,7 @@ app.use(xss());
 app.use(mongoSanitize());
 // json body parser
 // app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 
 app.use('/api/v1/auth', authRouter);

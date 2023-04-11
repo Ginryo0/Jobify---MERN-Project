@@ -32,7 +32,6 @@ const register = async (req, res) => {
       lastName: user.lastName,
       location: user.location,
     },
-    token,
   });
   // errors will be caught automatically by express-async-errors
 };
@@ -56,7 +55,7 @@ const login = async (req, res) => {
   // omit user from user obj sent to client
   user.password = undefined;
   attachCookies({ res, token });
-  res.status(StatusCodes.OK).json({ user, token, location: user.location });
+  res.status(StatusCodes.OK).json({ user, location: user.location });
 };
 const updateUser = async (req, res) => {
   const { email, name, lastName, location } = req.body;
@@ -76,7 +75,7 @@ const updateUser = async (req, res) => {
   // create new token -for no reason-
   const token = user.createJWT();
 
-  res.status(StatusCodes.OK).json({ user, token, location: user.location });
+  res.status(StatusCodes.OK).json({ user, location: user.location });
 };
 
 export { register, login, updateUser };
