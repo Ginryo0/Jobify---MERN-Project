@@ -7,6 +7,11 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import morgan from 'morgan';
 
+// sec pkgs
+import helmet from 'helmet';
+import xss from 'xss-clean';
+import mongoSanitize from 'express-mongo-sanitize';
+
 // db and authenticateUser
 import connectDB from './db/connect.js';
 
@@ -28,6 +33,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // serving front end
 app.use(express.static(path.resolve(__dirname, './client/build')));
+
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
 // json body parser
 // app.use(cors());
 app.use(express.json());
