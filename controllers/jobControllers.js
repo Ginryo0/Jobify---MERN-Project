@@ -42,10 +42,7 @@ const getAllJobs = async (req, res) => {
     queryObject.position = { $regex: search, $options: 'i' };
   }
 
-  page = +page || 1;
-  limit = +limit || 10;
-  const skip = (page - 1) * limit;
-  let promise = Job.find(queryObject).skip(skip).limit(limit);
+  let promise = Job.find(queryObject);
 
   // sorting
   if (sort === 'latest') {
@@ -59,11 +56,19 @@ const getAllJobs = async (req, res) => {
     promise = promise.sort('-position');
   }
 
+  // pagination logic
+  page = +page || 1;
+  limit = +limit || 10;
+  const skip = (page - 1) * limit;
+  promise = promise.skip(skip).limit(limit);
+
   const jobs = await promise;
 
-  res
-    .status(StatusCodes.OK)
-    .json({ jobs, totalJobs: jobs.length, numOfPages: 1 });
+  // totalJobs and numOfPages for pagination
+  const totalJobs = await Job.countDocuments(queryObject);
+  const numOfPages = Math.ceil(totalJobs / limit);
+
+  res.status(StatusCodes.OK).json({ jobs, totalJobs, numOfPages });
 };
 const updateJob = async (req, res) => {
   const { id: jobId } = req.params;
