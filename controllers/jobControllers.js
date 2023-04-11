@@ -45,7 +45,16 @@ const getAllJobs = async (req, res) => {
   let promise = Job.find(queryObject);
 
   // sorting
-
+  if (sort === 'latest') {
+    // - = descending
+    promise = promise.sort('-createdAt');
+  } else if (sort === 'oldest') {
+    promise = promise.sort('createdAt');
+  } else if (sort === 'a-z') {
+    promise = promise.sort('position');
+  } else if (sort === 'z-a') {
+    promise = promise.sort('-position');
+  }
   const jobs = await promise;
 
   res
