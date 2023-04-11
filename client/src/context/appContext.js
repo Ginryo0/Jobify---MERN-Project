@@ -28,6 +28,7 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
   CHANGE_PAGE,
+  DELETE_JOB_ERROR,
 } from './actions';
 
 const user = localStorage.getItem('user');
@@ -184,12 +185,10 @@ const AppCtxProvider = ({ children }) => {
 
       addUserToLocalStorage({ user, location, token });
     } catch (error) {
-      if (!error.response.data.status === 401) {
-        dispatch({
-          type: UPDATE_USER_ERROR,
-          payload: { msg: error.response.data.msg },
-        });
-      }
+      dispatch({
+        type: UPDATE_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
   };
 
@@ -279,7 +278,10 @@ const AppCtxProvider = ({ children }) => {
       await authFetch.delete(`/jobs/${jobId}`);
       getJobs();
     } catch (error) {
-      logoutUser();
+      dispatch({
+        type: DELETE_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
   };
 

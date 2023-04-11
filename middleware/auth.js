@@ -10,9 +10,8 @@ const auth = async (req, res, next) => {
   const token = authHeader.split(' ')[1];
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    // req.user = payload;
-    console.log(payload);
-    req.user = { userId: payload.userId };
+    const testUser = payload.userId === '643596cd62f71573aaa74304';
+    req.user = { userId: payload.userId, testUser };
     next();
   } catch (err) {
     throw new UnAuthenticatedError('Authentication Invalid');
