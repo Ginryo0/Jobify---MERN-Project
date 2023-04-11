@@ -57,6 +57,7 @@ const login = async (req, res) => {
   attachCookies({ res, token });
   res.status(StatusCodes.OK).json({ user, location: user.location });
 };
+
 const updateUser = async (req, res) => {
   const { email, name, lastName, location } = req.body;
   if (!email || !name || !lastName || !location) {
@@ -78,4 +79,9 @@ const updateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, location: user.location });
 };
 
-export { register, login, updateUser };
+const getCurrentUser = async (req, res) => {
+  const user = await User.findOne({ id: req.user.userId });
+  res.status(StatusCodes.OK).json({ user, location: user.location });
+};
+
+export { register, login, updateUser, getCurrentUser };
