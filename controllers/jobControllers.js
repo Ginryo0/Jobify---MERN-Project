@@ -22,7 +22,31 @@ const createJob = async (req, res) => {
 };
 
 const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({ createdBy: req.user.userId });
+  const { search, status, jobType, sort } = req.query;
+
+  const queryObject = {
+    createdBy: req.user.userId,
+  };
+
+  if (status !== 'all') {
+    queryObject.status = status;
+  }
+
+  if (jobType !== 'all') {
+    queryObject.jobType = jobType;
+  }
+
+  if (search) {
+    // regex -> will look if position includes search query
+    // options i = case insensitive
+    queryObject.position = { $regex: search, $options: 'i' };
+  }
+
+  let promise = Job.find(queryObject);
+
+  // sorting
+
+  const jobs = await promise;
 
   res
     .status(StatusCodes.OK)
