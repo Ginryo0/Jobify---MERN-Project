@@ -22,12 +22,12 @@ const JobsContainer = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       getJobs();
-    }, 500);
+    }, 300);
     return () => {
       // clear previous timeout
       clearTimeout(timer);
     };
-  }, [search, searchStatus, searchType, sort]);
+  }, [page, search, searchStatus, searchType, sort]);
 
   if (isLoading) {
     return <Loading center />;
