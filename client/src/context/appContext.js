@@ -29,10 +29,13 @@ import {
   CLEAR_FILTERS,
   CHANGE_PAGE,
   DELETE_JOB_ERROR,
+  GET_CURRENT_USER_BEGIN,
+  GET_CURRENT_USER_SUCCESS,
 } from './actions';
 
 const initialState = {
   // UI state
+  userLoading: true,
   isLoading: false,
   showAlert: false,
   alertType: '',
@@ -107,6 +110,11 @@ const AppCtxProvider = ({ children }) => {
     };
   }, [state]);
 
+  // get current user on loading
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   // actions fn
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
@@ -140,7 +148,8 @@ const AppCtxProvider = ({ children }) => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
 
-  const logoutUser = () => {
+  const logoutUser = async () => {
+    await authFetch.get('/auth/logout');
     dispatch({ type: LOGOUT_USER });
   };
 
@@ -272,6 +281,19 @@ const AppCtxProvider = ({ children }) => {
 
   const changePage = (page) => {
     dispatch({ type: CHANGE_PAGE, payload: { page } });
+  };
+
+  const getCurrentUser = async () => {
+    dispatch({ type: GET_CURRENT_USER_BEGIN });
+    try {
+      const { data } = await authFetch('/auth/getCurrentUser');
+      const { user, location } = data;
+      dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: { user, location } });
+    } catch (error) {
+      // not needed
+      if (error.response.status === 401) return;
+      logoutUser();
+    }
   };
   return (
     <AppContext.Provider

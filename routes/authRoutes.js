@@ -14,12 +14,15 @@ import {
   login,
   updateUser,
   getCurrentUser,
+  logout,
 } from '../controllers/AuthController.js';
 import authenticateUser from '../middleware/auth.js';
 import testUser from '../middleware/testUser.js';
 
 router.route('/register').post(apiLimiter, register);
 router.route('/login').post(apiLimiter, login);
+router.route('/logout').get(logout);
+
 router.route('/update-user').patch(authenticateUser, testUser, updateUser);
 router.route('/getCurrentUser').get(authenticateUser, getCurrentUser);
 

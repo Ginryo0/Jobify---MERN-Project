@@ -75,13 +75,22 @@ const updateUser = async (req, res) => {
 
   // create new token -for no reason-
   const token = user.createJWT();
-
+  attachCookies({ res, token });
   res.status(StatusCodes.OK).json({ user, location: user.location });
 };
 
 const getCurrentUser = async (req, res) => {
-  const user = await User.findOne({ id: req.user.userId });
+  const user = await User.findOne({ _id: req.user.userId });
   res.status(StatusCodes.OK).json({ user, location: user.location });
 };
 
-export { register, login, updateUser, getCurrentUser };
+const logout = async (req, res) => {
+  res.cookie('token', 'logout', {
+    httpOnly: true,
+    expires: new Date(Date.now() + 1000),
+    // secure: process.env.NODE_ENV === 'production',
+  });
+  res.status(StatusCodes.OK).json({ msg: 'User logged out' });
+};
+
+export { register, login, updateUser, getCurrentUser, logout };
