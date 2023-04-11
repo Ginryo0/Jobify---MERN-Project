@@ -5,11 +5,27 @@ import Job from './Job';
 import Wrapper from '../assets/wrappers/JobsContainer';
 
 const JobsContainer = () => {
-  const { getJobs, jobs, isLoading, page, totalJobs } = useAppCtx();
+  const {
+    getJobs,
+    jobs,
+    isLoading,
+    page,
+    totalJobs,
+    search,
+    searchStatus,
+    searchType,
+    sort,
+  } = useAppCtx();
 
   useEffect(() => {
-    getJobs();
-  }, []);
+    const timer = setTimeout(() => {
+      getJobs();
+    }, 500);
+    return () => {
+      // clear previous timeout
+      clearTimeout(timer);
+    };
+  }, [search, searchStatus, searchType, sort]);
 
   if (isLoading) {
     return <Loading center />;

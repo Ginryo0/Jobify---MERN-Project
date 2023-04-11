@@ -17,7 +17,7 @@ const SearchContainer = () => {
   } = useAppCtx();
 
   const handleSearch = (e) => {
-    // if(isLoading) return
+    // if (isLoading) return;
     handleChange({ name: e.target.name, value: e.target.value });
   };
   return (
