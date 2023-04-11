@@ -31,10 +31,6 @@ import {
   DELETE_JOB_ERROR,
 } from './actions';
 
-const user = localStorage.getItem('user');
-const token = localStorage.getItem('token');
-const userLocation = localStorage.getItem('location');
-
 const initialState = {
   // UI state
   isLoading: false,
@@ -43,15 +39,14 @@ const initialState = {
   alertText: '',
   showSidebar: false,
   // User state
-  user: user ? JSON.parse(user) : null,
-  token: token,
-  userLocation: userLocation || '',
+  user: null,
+  userLocation: '',
   // Job state
   isEditing: false,
   editJobId: '',
   position: '',
   company: '',
-  jobLocation: userLocation || '',
+  jobLocation: '',
   jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
   jobType: 'full-time',
   statusOptions: ['pending', 'interview', 'declined'],
@@ -83,15 +78,8 @@ const AppCtxProvider = ({ children }) => {
   });
 
   // Request Interceptor
-  authFetch.interceptors.request.use(
-    (config) => {
-      config.headers['Authorization'] = `Bearer ${state.token}`;
-      return config;
-    },
-    (err) => {
-      return Promise.reject(err);
-    }
-  );
+  // deleted - not needed with cookie
+
   // Response Interceptor
   authFetch.interceptors.response.use(
     (res) => res,
@@ -119,19 +107,6 @@ const AppCtxProvider = ({ children }) => {
     };
   }, [state]);
 
-  // LocalStorage Funcs
-  const addUserToLocalStorage = ({ user, token, location }) => {
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('token', token);
-    localStorage.setItem('location', location);
-  };
-
-  const removeUserFromLocalStorage = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('location');
-  };
-
   // actions fn
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
@@ -146,13 +121,12 @@ const AppCtxProvider = ({ children }) => {
         currentUser
       );
       // console.log(response);
-      const { user, token, location } = data;
+      const { user, location } = data;
       dispatch({
         type: SIGN_USER_SUCCESS,
-        payload: { user, token, location, alertText },
+        payload: { user, location, alertText },
       });
       // local storage store token
-      addUserToLocalStorage(data);
     } catch (error) {
       // console.log(error.response);
       dispatch({
@@ -168,7 +142,6 @@ const AppCtxProvider = ({ children }) => {
 
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
-    removeUserFromLocalStorage();
   };
 
   const updateUser = async (currentUser) => {
@@ -176,14 +149,12 @@ const AppCtxProvider = ({ children }) => {
     try {
       const { data } = await authFetch.patch('/auth/update-user', currentUser);
 
-      const { user, location, token } = data;
+      const { user, location } = data;
 
       dispatch({
         type: UPDATE_USER_SUCCESS,
-        payload: { user, location, token },
+        payload: { user, location },
       });
-
-      addUserToLocalStorage({ user, location, token });
     } catch (error) {
       dispatch({
         type: UPDATE_USER_ERROR,
