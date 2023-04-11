@@ -95,7 +95,7 @@ const showStats = async (req, res) => {
     },
     // -1 = descending
     { $sort: { '_id.year': -1, '_id.month': -1 } },
-    { $limit: 6 },
+    { $limit: 12 },
   ]);
 
   monthlyApplications = monthlyApplications
