@@ -5,6 +5,7 @@ import {
 } from '../errors/index.js';
 
 import User from '../models/User.js';
+import attachCookies from '../utils/attachCookies.js';
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -21,6 +22,8 @@ const register = async (req, res) => {
 
   const user = await User.create({ name, email, password });
   const token = user.createJWT();
+
+  attachCookies({ res, token });
   res.status(StatusCodes.CREATED).json({
     location: user.location,
     user: {
@@ -52,13 +55,7 @@ const login = async (req, res) => {
   const token = user.createJWT();
   // omit user from user obj sent to client
   user.password = undefined;
-
-  const oneDay = 24 * 60 * 60 * 1000;
-  res.cookie('token', token, {
-    httpOnly: true,
-    expires: new Date(Date.now() + oneDay),
-    secure: process.env.NODE_ENV === 'production',
-  });
+  attachCookies({ res, token });
   res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 const updateUser = async (req, res) => {
