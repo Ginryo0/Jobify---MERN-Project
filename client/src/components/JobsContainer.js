@@ -19,16 +19,23 @@ const JobsContainer = () => {
     numOfPages,
   } = useAppCtx();
 
+  // debounced update on search change
   useEffect(() => {
     const timer = setTimeout(() => {
       getJobs();
-    }, 300);
+    }, 500);
     return () => {
       // clear previous timeout
       clearTimeout(timer);
     };
     // eslint-disable-next-line
-  }, [page, search, searchStatus, searchType, sort]);
+  }, [search]);
+
+  // immediate update
+  useEffect(() => {
+    getJobs();
+    // eslint-disable-next-line
+  }, [page, searchStatus, searchType, sort]);
 
   if (isLoading) {
     return <Loading center />;
