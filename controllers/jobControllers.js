@@ -22,7 +22,7 @@ const createJob = async (req, res) => {
 };
 
 const getAllJobs = async (req, res) => {
-  const { search, status, jobType, sort } = req.query;
+  let { search, status, jobType, sort, page, limit } = req.query;
 
   const queryObject = {
     createdBy: req.user.userId,
@@ -42,7 +42,10 @@ const getAllJobs = async (req, res) => {
     queryObject.position = { $regex: search, $options: 'i' };
   }
 
-  let promise = Job.find(queryObject);
+  page = +page || 1;
+  limit = +limit || 10;
+  const skip = (page - 1) * limit;
+  let promise = Job.find(queryObject).skip(skip).limit(limit);
 
   // sorting
   if (sort === 'latest') {
@@ -55,6 +58,7 @@ const getAllJobs = async (req, res) => {
   } else if (sort === 'z-a') {
     promise = promise.sort('-position');
   }
+
   const jobs = await promise;
 
   res
