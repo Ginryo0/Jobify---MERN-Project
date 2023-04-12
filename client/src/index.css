@@ -215,6 +215,11 @@ ul {
   margin: 3rem auto;
   transition: var(--transition);
 }
+.form input:focus,
+.form select:focus {
+  outline: transparent;
+  border: 2px solid var(--primary-500);
+}
 .form:hover {
   box-shadow: var(--shadow-4);
 }
@@ -272,8 +277,16 @@ ul {
   animation: spinner 2s linear infinite;
 }
 .loading-center {
+  position: static;
   margin: 0 auto;
 }
+
+.loading-center-y {
+  position: fixed;
+  top: 48%;
+  left: 47%;
+}
+
 /* title */
 
 .title {

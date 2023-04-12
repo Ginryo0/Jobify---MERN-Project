@@ -87,7 +87,6 @@ const AppCtxProvider = ({ children }) => {
   authFetch.interceptors.response.use(
     (res) => res,
     (err) => {
-      console.log(err.response);
       if (err.response.status === 401) {
         logoutUser();
       }
@@ -97,11 +96,10 @@ const AppCtxProvider = ({ children }) => {
 
   // ClearAlert - useEffect to clear previous timer
   useEffect(() => {
-    // console.log(state);
     const timer = state.showAlert
       ? setTimeout(() => {
           state.showAlert && dispatch({ type: CLEAR_ALERT });
-        }, 1500)
+        }, 2000)
       : 0;
 
     return () => {
@@ -113,6 +111,7 @@ const AppCtxProvider = ({ children }) => {
   // get current user on loading
   useEffect(() => {
     getCurrentUser();
+    // eslint-disable-next-line
   }, []);
 
   // actions fn
@@ -128,7 +127,6 @@ const AppCtxProvider = ({ children }) => {
         `/api/v1/auth/${endPoint}`,
         currentUser
       );
-      // console.log(response);
       const { user, location } = data;
       dispatch({
         type: SIGN_USER_SUCCESS,
@@ -136,7 +134,6 @@ const AppCtxProvider = ({ children }) => {
       });
       // local storage store token
     } catch (error) {
-      // console.log(error.response);
       dispatch({
         type: SIGN_USER_ERROR,
         payload: { msg: error.response.data.msg },

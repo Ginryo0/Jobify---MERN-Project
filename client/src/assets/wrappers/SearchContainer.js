@@ -4,11 +4,6 @@ const Wrapper = styled.section`
   .form {
     width: 100%;
     max-width: 100%;
-    input:focus,
-    select:focus {
-      outline: transparent;
-      border: 2px solid var(--primary-500);
-    }
   }
   .form-input,
   .form-select,

@@ -1,10 +1,13 @@
 import { FormRow, Alert, FormRowSelect } from '../../components';
 import { useAppCtx } from '../../context/appContext';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
+import { useNavigate } from 'react-router-dom';
 
 const AddJob = () => {
+  const navigate = useNavigate();
   const {
     showAlert,
+    alertType,
     displayAlert,
     isEditing,
     position,
@@ -33,6 +36,12 @@ const AddJob = () => {
     }
     createJob();
   };
+
+  if (showAlert && alertType === 'success') {
+    setTimeout(() => {
+      navigate('/all-jobs');
+    }, 1000);
+  }
 
   const jobInputHandler = (e) => {
     const name = e.target.name;
